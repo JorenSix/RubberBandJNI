@@ -31,9 +31,7 @@ cp lib/librubberband-jni.so ../lib/
 cd ../build
 # Build the RubberBandJNI jar file with Apache Ant
 ant
-cd ..
-</code>
-</pre>
+cd ..</code></pre>
 
 If everything went well there are a few new files on your system. @lib/rubberband.jar@ contains the Java part of the JNI-bridge. @lib/librubberband-jni.so@ contains Rubber Band C++ JNI bridge compiled for your system. @build/RubberBandJNI.jar@ contains the example application of this repository. If those files are created correctly, you are ready to run RubberBandJNI. The application needs to be started with a correct @java.library.path@:
 
@@ -44,6 +42,4 @@ Watch out: the order of the options does matter: the @-D@ option should appear b
 <pre><code>rm 46805fcedf7e.zip 
 rm -r breakfastquay-rubberband-46805fcedf7e
 #rm lib/rubberband.jar
-#rm lib/librubberband-jni.so
-</code>
-</pre>
+#rm lib/librubberband-jni.so</code></pre>
