@@ -13,9 +13,7 @@ To install the dependencies on Debian, install following packages:
 
 Once the dependencies are installed correctly the following should work:
 
-<pre>
-<code>
-# Download and unzip and the latest source code
+<pre><code># Download and unzip and the latest source code
 wget https://bitbucket.org/breakfastquay/rubberband/get/46805fcedf7e.zip
 unzip 46805fcedf7e.zip 
 # Change the working directory
@@ -41,10 +39,9 @@ If everything went well there are a few new files on your system. @lib/rubberban
 
 @java -Djava.library.path=lib/ -jar build/RubberBandJNI.jar@
 
-Watch out: the order of the options does matter: the @-D@ option should appear before @-jar@. Finally, to clean up remove the previously downloaded source code. 
-<pre>
-<code>
-rm 46805fcedf7e.zip 
+Watch out: the order of the options does matter: the @-D@ option should appear before @-jar@. Finally, to clean up remove the previously downloaded source code.
+ 
+<pre><code>rm 46805fcedf7e.zip 
 rm -r breakfastquay-rubberband-46805fcedf7e
 #rm lib/rubberband.jar
 #rm lib/librubberband-jni.so
