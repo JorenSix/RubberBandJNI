@@ -1,0 +1,52 @@
+
+h1. Rubber Band JNI - Controlling Real-Time Audio Time-Stretching from Java
+
+This repository contains an example of real-time pitch-shifting and audio time-stretching in Java. It uses two components. The first component is "a high quality software C++ library for audio time-stretching and pitch-shifting C++ called Rubber Band":http://breakfastquay.com/rubberband/. The second component is a Java audio library called "TarsosDSP":https://github.com/JorenSix/TarsosDSP. To bridge the gap between the two JNI(Java Native Interface) is used. Rubber Band provides a JNI interface and starting from the currently unreleased version 1.8.2, makefiles are provided that make compiling and subsequently using the JNI version of Rubber Band relatively straightforward.
+
+h2. Installation
+
+To get the example working several elements need to be in place. 1) To compile Rubber Band a C++ tool-chain needs to be available on your system. This includes a compiler and related tools like @make@. 2) The dependencies for Rubber Band should be installed, otherwise compilation is impossible. 3) A JDK should be installed to compile java files and to provide the JNI header files. Here we assume that a JDK and C++ tool-chain is already available. The rest is explained for Debian 8.1 but should be transferable to any Unix like system.
+
+To install the dependencies on Debian, install following packages:
+
+@sudo apt-get install vamp-plugin-sdk libsndfile1-dev libfftw3-dev libvamp-sdk2 libvamp-hostsdk3 libsamplerate0-dev@
+
+Once the dependencies are installed correctly the following should work:
+
+<pre>
+<code>
+# Download and unzip and the latest source code
+wget https://bitbucket.org/breakfastquay/rubberband/get/46805fcedf7e.zip
+unzip 46805fcedf7e.zip 
+# Change the working directory
+cd breakfastquay-rubberband-46805fcedf7e
+# If the dependencies are installed correctly the following will work
+./configure
+# Compile the source code
+make
+# Create the JNI library, set JAVA_HOME to your JDK directory
+make jni JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+# Copy the newly created JAR-file and native library to the lib directory
+cp lib/rubberband.jar ../lib/
+cp lib/librubberband-jni.so ../lib/
+# change the working directory
+cd ../build
+# Build the RubberBandJNI jar file with Apache Ant
+ant
+cd ..
+</code>
+</pre>
+
+If everything went well there are a few new files on your system. @lib/rubberband.jar@ contains the Java part of the JNI-bridge. @lib/librubberband-jni.so@ contains Rubber Band C++ JNI bridge compiled for your system. @build/RubberBandJNI.jar@ contains the example application of this repository. If those files are created correctly, you are ready to run RubberBandJNI. The application needs to be started with a correct @java.library.path@:
+
+@java -Djava.library.path=lib/ -jar build/RubberBandJNI.jar@
+
+Watch out: the order of the options does matter: the @-D@ option should appear before @-jar@. Finally, to clean up remove the previously downloaded source code. 
+<pre>
+<code>
+rm 46805fcedf7e.zip 
+rm -r breakfastquay-rubberband-46805fcedf7e
+#rm lib/rubberband.jar
+#rm lib/librubberband-jni.so
+</code>
+</pre>
