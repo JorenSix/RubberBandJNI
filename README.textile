@@ -73,14 +73,13 @@ To get the makefile working on Mac OS X some changes need to be done. The first 
 ...
 DYNAMIC_LDFLAGS         := -shared
 VAMP_LDFLAGS            := -shared
-LADSPA_LDFLAGS          := -shared
-<pre><code>
+LADSPA_LDFLAGS          := -shared</code></pre>
 
 
 Finally compile the library by calling @make@. It can complain about missing Then call:
  
 <pre><code>make
-make jni JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home<pre><code>
+make jni JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home</code></pre>
 
 If you get complaints about a missing @jni_md.h@ "link the header files, as described here.":https://stackoverflow.com/questions/24996017/jdk-1-8-on-linux-missing-include-file
 
