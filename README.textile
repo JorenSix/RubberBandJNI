@@ -3,7 +3,20 @@ h1. Rubber Band JNI - Controlling Real-Time Audio Time-Stretching from Java
 
 This repository contains an example of real-time pitch-shifting and audio time-stretching in Java. It uses two components. The first component is "a high quality software C++ library for audio time-stretching and pitch-shifting C++ called Rubber Band":http://breakfastquay.com/rubberband/. The second component is a Java audio library called "TarsosDSP":https://github.com/JorenSix/TarsosDSP. To bridge the gap between the two JNI(Java Native Interface) is used. Rubber Band provides a JNI interface and starting from the currently unreleased version 1.8.2, makefiles are provided that make compiling and subsequently using the JNI version of Rubber Band relatively straightforward.
 
-h2. Installation
+h2. Running the example
+
+For recent 64 bits Linux machines and Mac OS X this library provides compiled JNI libraries. To run the example you need to build it, with "Apache Ant" and set the correct @java.library.path@ when running the executable jar. This could be done as follows:
+
+<pre><code>git clone https://github.com/JorenSix/RubberBandJNI.git
+cd RubberbandJNI/build
+ant
+cd ..
+java -Djava.library.path=lib/ -jar build/RubberBandJNI.jar</code></pre>.
+
+If this does not work, you perhaps need to compile a JNI library yourself. Below documentation is available to get it working on a Linux machine and Mac OS X.
+
+
+h2. Compiling the Rubber Band JNI library on Debian Linux
 
 To get the example working several elements need to be in place. 1) To compile Rubber Band a C++ tool-chain needs to be available on your system. This includes a compiler and related tools like @make@. 2) The dependencies for Rubber Band should be installed, otherwise compilation is impossible. 3) A JDK should be installed to compile java files and to provide the JNI header files. Here we assume that a JDK and C++ tool-chain is already available. The rest is explained for Debian 8.1 but should be transferable to any Unix like system.
 
@@ -43,3 +56,31 @@ Watch out: the order of the options does matter: the @-D@ option should appear b
 rm -r breakfastquay-rubberband-46805fcedf7e
 #rm lib/rubberband.jar
 #rm lib/librubberband-jni.so</code></pre>
+
+h2. Compiling the Rubber Band JNI library on Mac OS X
+
+To install the dependencies on Mac OS X the "homebrew":http://brew.sh/ package manager is very helpful:
+
+<pre><code>brew install http://tuohela.net/irc/vamp-plugin-sdk.rb
+brew install fftw
+brew install libsamplerate
+brew install libsndfile
+brew install wget</code></pre>
+
+To get the makefile working on Mac OS X some changes need to be done. The first change is to correctly name the library with a .dylib instead of an .so:
+
+<pre><code>DYNAMIC_EXTENSION       := .dylib
+...
+DYNAMIC_LDFLAGS         := -shared
+VAMP_LDFLAGS            := -shared
+LADSPA_LDFLAGS          := -shared
+<pre><code>
+
+
+Finally compile the library by calling @make@. It can complain about missing Then call:
+ 
+<pre><code>make
+make jni JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home<pre><code>
+
+If you get complaints about a missing @jni_md.h@ "link the header files, as described here.":https://stackoverflow.com/questions/24996017/jdk-1-8-on-linux-missing-include-file
+
