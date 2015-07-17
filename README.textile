@@ -83,3 +83,51 @@ make jni JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Ho
 
 If you get complaints about a missing @jni_md.h@ "link the header files, as described here.":https://stackoverflow.com/questions/24996017/jdk-1-8-on-linux-missing-include-file
 
+
+h2. Compiling the Rubber Band JNI library on Debian for Android
+
+
+Install the Android Native Development kit, the NDK, and make sure that ndk-build
+is available on your path.
+
+<pre><code># Download and unzip and the latest source code
+wget https://bitbucket.org/breakfastquay/rubberband/get/46805fcedf7e.zip
+unzip 46805fcedf7e.zip 
+# Change the working directory
+cd breakfastquay-rubberband-46805fcedf7e
+#
+mkdir jni
+mkdir libs
+
+# Configure the application to use stl
+echo "APP_STL := gnustl_static" > jni/Application.mk
+# Copy the build file to the expected location. 
+cp Android.mk jni</code></pre>
+
+Then change @jni/Android.mk@ so that the correct directories are used. For me, the beginning of the file looks like this:
+
+<pre><code>LOCAL_MODULE := rubberband
+LOCAL_MODULE_FILENAME := librubberband-jni
+LOCAL_PATH := /home/joren/breakfastquay-rubberband-46805fcedf7e
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/rubberband $(LOCAL_PATH)/rubberband/src
+RUBBERBAND_PATH := /home/joren/breakfastquay-rubberband-46805fcedf7e
+RUBBERBAND_SRC_PATH := $(RUBBERBAND_PATH)/src</code></pre>
+
+Now you are ready to call @ndk-build@ in the top directory and it should build a library in @libs/armeabi/librubberband-jni.so@:
+
+<pre><code>[armeabi-v7a] Compile++ arm  : rubberband <= SilentAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= CompoundAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= HighFrequencyAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= SpectralDifferenceAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= ConstantAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= PercussiveAudioCurve.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= StretcherImpl.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= StretcherProcess.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= StretchCalculator.cpp
+[armeabi-v7a] Compile++ arm  : rubberband <= RubberBandStretcher.cpp
+[armeabi-v7a] Compile arm    : rubberband <= resample.c
+[armeabi-v7a] Compile arm    : rubberband <= kiss_fft.c
+[armeabi-v7a] Compile arm    : rubberband <= kiss_fftr.c
+[armeabi-v7a] SharedLibrary  : librubberband-jni.so
+[armeabi-v7a] Install        : librubberband-jni.so => libs/armeabi/librubberband-jni.so</code></pre>
+
