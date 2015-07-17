@@ -131,3 +131,12 @@ Now you are ready to call @ndk-build@ in the top directory and it should build a
 [armeabi-v7a] SharedLibrary  : librubberband-jni.so
 [armeabi-v7a] Install        : librubberband-jni.so => libs/armeabi/librubberband-jni.so</code></pre>
 
+In Android Studio this library can be put in the following folder. It can then be called from Java automatically.
+
+<pre><code>|--app: 
+|--|--src: 
+|--|--|--main 
+|--|--|--|--jniLibs 
+|--|--|--|--|--armeabi 
+|--|--|--|--|--|--.so Files</code></pre> 
+
