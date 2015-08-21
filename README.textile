@@ -138,5 +138,20 @@ In Android Studio this library can be put in the following folder. It can then b
 |--|--|--main 
 |--|--|--|--jniLibs 
 |--|--|--|--|--armeabi 
+|--|--|--|--|--|--.so Files
+|--|--|--|--|--armeabi-v7a 
 |--|--|--|--|--|--.so Files</code></pre> 
+
+
+h2. Compiling the Rubber Band JNI library on Windows for Window x86 and x64
+
+Download the free "Visual Studio Community 2015":https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx and install it. Make sure that the C/C++ components are installed. Subsequently download the latest "RubberBand source code":https://bitbucket.org/breakfastquay/rubberband/get/46805fcedf7e.zip and place the file that is found in @build/@ of this repository in the top directory of the downloaded Rubberband source tree. Doubleclick it to start Visual Studio Community.
+
+To make it build successfully make sure that you also have a recent Java JDK on installed your machine. When building the project the following directories need to be set as additional include directories:
+
+<pre><code>C:\Program Files (x86)\Java\jdk1.8.0_60\include;
+C:\Program Files (x86)\Java\jdk1.8.0_60\include\win32</code></pre>
+
+If all goes wel a build should create a dll named @rubberband-library.dll@ to work correctly with this project it should be renamed @rubberband-jni.dll@.
+
 
