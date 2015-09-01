@@ -39,12 +39,16 @@
 			<fileset dir="../bin"/>
 
 			<!-- Include external libraries -->
-			<zipfileset excludes="META-INF/*.SF" src="../lib/TarsosDSP-2.2.jar"/>
-			<zipfileset excludes="META-INF/*.SF" src="../lib/rubberband.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="../lib/TarsosDSP-2.3.jar"/>
 
 			<!-- include source files -->
 			<fileset dir="../src">
 				<include name="**/*.java"/>
+			</fileset>
+			
+			<!-- include jni libraries -->
+			<fileset dir="../jni">
+				<include name="**/*"/>
 			</fileset>
 		</jar>		
 	</target>
